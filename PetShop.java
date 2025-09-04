@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,8 +25,10 @@ public class PetShop{
             switch (opcao){
                 case 'i':
                     imprimeTutor();
+                    break;
                 case 'x':
                     System.out.println("Sistema de cadastro encerrado!");
+                    break;
                 default:
                     System.out.println("Opcao invalida, digite novamente.");
                     break;
@@ -34,13 +38,13 @@ public class PetShop{
         }while (opcao != 'x');
         scanner.close();
     }
-    public static int geraCodTutor(){
+    private static int geraCodTutor(){
         if(tut.size() == 0)
             return 1;
         else
             return tut.get(tut.size()-1).getCod()+1;
     }
-    public static void popularCadastro(){
+    private static void popularCadastro(){
         Tutor t;
         //Gera tutor 1 
         int codTut = geraCodTutor();
@@ -61,7 +65,57 @@ public class PetShop{
         t.incluiPet("Peixão", "Peixe");
         tut.add(t); 
     }
-    public static void imprimeTutor(){
+    private static void cadTutor(){
+        Tutor t;
+        int codTut = geraCodTutor();
+        Scanner scanner = new Scanner(System.in);
+        
+        while (true){
+            System.out.println("Digite o nome do tutor(a): (vazio encerra o programa)");
+            String nome = scanner.nextLine();
+            
+            if (nome.isEmpty())
+                break;
+            }
+            System.out.println("Digite a data nascimento do tutor(a) (dd/mm/yyyy): ");
+            System.out.println("(separado por espacos)");
+            LocalDate dtaNascimento = null;
+            while(dtaNascimento == null){
+                int dia = scanner.nextInt();
+                int mes = scanner.nextInt();
+                int ano = scanner.nextInt();
+                scanner.nextLine();
+                if(validaData(dia, mes, ano)){
+                    dtaNascimento = LocalDate.of(ano, mes, dia);
+                }else{
+                    System.out.println("Data invalida, digite novamente.");
+                }
+            }
+        scanner.close();
+    }
+    private static boolean validaData(int dia, int mes, int ano){
+        if (ano <= 0) return false;
+        if (mes < 1 || mes > 12) return false;
+        int[] diasMes = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        if (mes == 2 && ehBissexto(ano)){
+            diasMes[1] = 29;
+        }
+
+        if (dia < 1 || dia > diasMes [mes - 1]) return false;
+
+        int idade = Period.between(LocalDate.of(dia, mes, ano), LocalDate.now()).getYears();
+        if(idade - 18 <= 0) return false;
+
+        return true;
+    }
+
+    private static boolean ehBissexto(int ano) {
+        return (ano % 400 == 0) || 
+               (ano % 4 == 0 && ano % 100 != 0);
+    }
+
+    private static void imprimeTutor(){
         System.out.println("*** Cadastro de Tutor ***");
         for (Tutor t: tut)
             System.out.println(t.toString());
