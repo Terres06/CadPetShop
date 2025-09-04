@@ -1,10 +1,38 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PetShop{
     private static ArrayList<Tutor> tut = new ArrayList<Tutor>();
     public static void main(String[] args) {
-        
+        Scanner scanner = new Scanner(System.in);
+        char opcao;
+        popularCadastro();
+        do{
+            System.out.println("***** ESCOLHER UMA OPÇÃO *****");
+            System.out.println("c: cadastrar tutor + pet(s)");
+            System.out.println("i: imprimir cadastro");
+            System.out.println("b: buscar pets por codigo tutor");
+            System.out.println("e: excluir pets por codigo tutor");
+            System.out.println("x: encerrar.");
+            System.out.print("Opção escolhida: ");
+
+            String input = scanner.nextLine().toLowerCase();
+            opcao = input.isEmpty() ? ' ' : input.charAt(0);
+
+            switch (opcao){
+                case 'i':
+                    imprimeTutor();
+                case 'x':
+                    System.out.println("Sistema de cadastro encerrado!");
+                default:
+                    System.out.println("Opcao invalida, digite novamente.");
+                    break;
+            }
+            System.out.println();   
+
+        }while (opcao != 'x');
+        scanner.close();
     }
     public static int geraCodTutor(){
         if(tut.size() == 0)
@@ -12,7 +40,6 @@ public class PetShop{
         else
             return tut.get(tut.size()-1).getCod()+1;
     }
-
     public static void popularCadastro(){
         Tutor t;
         //Gera tutor 1 
@@ -33,5 +60,10 @@ public class PetShop{
         t = new Tutor("Edson Arantes",dtaNascimento,"R. Princesa Isabel 20",codTut);
         t.incluiPet("Peixão", "Peixe");
         tut.add(t); 
+    }
+    public static void imprimeTutor(){
+        System.out.println("*** Cadastro de Tutor ***");
+        for (Tutor t: tut)
+            System.out.println(t.toString());
     }
 }
