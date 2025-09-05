@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -74,7 +73,6 @@ public class PetShop {
 
     private static void cadTutor() {
         Tutor t;
-        int codTut = geraCodTutor();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -102,7 +100,7 @@ public class PetShop {
             System.out.println("Digite o endereco do tutor do pet");
             String endereco = scanner.nextLine();
 
-            t = new Tutor(nome, dtaNascimento, endereco, codTut);
+            t = new Tutor(nome, dtaNascimento, endereco, geraCodTutor());
 
             while (true) {
                 System.out.println("Digite o nome do pet: (Vazio encerra cadastro pet)");
