@@ -29,6 +29,9 @@ public class PetShop {
                 case 'i':
                     imprimeTutor();
                     break;
+                case 'b':
+                    buscarTutorPorCod();
+                    break;
                 case 'x':
                     System.out.println("Sistema de cadastro encerrado!");
                     break;
@@ -141,6 +144,18 @@ public class PetShop {
     private static boolean ehBissexto(int ano) {
         return (ano % 400 == 0) ||
                 (ano % 4 == 0 && ano % 100 != 0);
+    }
+
+    private static void buscarTutorPorCod(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nDigite o codigo do tutor a ser localizado: ");
+        int codTutor = scanner.nextInt();
+        for (int i = 0; i < tut.size(); i++ ){
+            if (codTutor - 1 == i){
+                System.out.println("\n--- Tutor localizado ---");
+                System.out.println(tut.get(i));
+            }
+        }
     }
 
     private static void imprimeTutor() {
