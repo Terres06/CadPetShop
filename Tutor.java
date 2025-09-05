@@ -51,10 +51,10 @@ public class Tutor {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         String ts = String.format("Cod tutor: %d \n",cod);
-        ts+=String.format(" Nome: %s\n",nome);
+        ts+=String.format("Nome..............: %s\n",nome);
         ts += String.format("Data de nascimento: %s (%d anos)\n", dtaNascimento.format(fmt), getIdade());
-        ts+=String.format("Endereco: %s\n",endereco);
-        ts+=String.format("Relação de pets: \n");
+        ts+=String.format("Endereco..........: %s\n",endereco);
+        ts+=String.format("Relação de pets...: \n");
         if (pets.size() == 0)
             ts += " Pets de " +nome+": Nenhum pet cadastrado.\n";
         else{
