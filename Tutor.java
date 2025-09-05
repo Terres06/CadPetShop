@@ -56,7 +56,7 @@ public class Tutor {
         ts+=String.format("Endereco..........: %s\n",endereco);
         ts+=String.format("Relação de pets...: \n");
         if (pets.size() == 0)
-            ts += " Pets de " +nome+": Nenhum pet cadastrado.\n";
+            ts += "Pets de " +nome+": Nenhum pet cadastrado.\n";
         else{
             for (Pet p: pets){
                 ts+= "- Nome do pet: "+p.getNome()+", ";

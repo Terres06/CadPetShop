@@ -1,10 +1,11 @@
+
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PetShop {
+
     private static ArrayList<Tutor> tut = new ArrayList<Tutor>();
 
     public static void main(String[] args) {
@@ -30,6 +31,12 @@ public class PetShop {
                 case 'i':
                     imprimeTutor();
                     break;
+                case 'b':
+                    buscarTutorPorCod();
+                    break;
+                case 'e':
+                    excluiTutorPorCod();
+                    break;
                 case 'x':
                     System.out.println("Sistema de cadastro encerrado!");
                     break;
@@ -44,10 +51,11 @@ public class PetShop {
     }
 
     private static int geraCodTutor() {
-        if (tut.size() == 0)
-            return 1;
-        else
+        if (tut.size() == 0) {
+            return 1; 
+        }else {
             return tut.get(tut.size() - 1).getCod() + 1;
+        }
     }
 
     private static void popularCadastro() {
@@ -74,14 +82,14 @@ public class PetShop {
 
     private static void cadTutor() {
         Tutor t;
-        int codTut = geraCodTutor();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("Digite o nome do tutor(a): (vazio encerra o programa)");
             String nome = scanner.nextLine();
-            if (nome.isEmpty())
+            if (nome.isEmpty()) {
                 break;
+            }
 
             System.out.println("Digite a data nascimento do tutor(a) (dd/mm/yyyy): ");
             System.out.println("(separado por espacos)");
@@ -102,13 +110,14 @@ public class PetShop {
             System.out.println("Digite o endereco do tutor do pet");
             String endereco = scanner.nextLine();
 
-            t = new Tutor(nome, dtaNascimento, endereco, codTut);
+            t = new Tutor(nome, dtaNascimento, endereco, geraCodTutor());
 
             while (true) {
                 System.out.println("Digite o nome do pet: (Vazio encerra cadastro pet)");
                 String pet = scanner.nextLine();
-                if (pet.isEmpty())
+                if (pet.isEmpty()) {
                     break;
+                }
                 System.out.println("Digite o tipo do pet: ");
                 String tipo = scanner.nextLine();
                 t.incluiPet(pet, tipo);
@@ -120,34 +129,63 @@ public class PetShop {
     }
 
     private static boolean validaData(int dia, int mes, int ano) {
-        if (ano <= 0)
+        if (ano <= 0) {
             return false;
-        if (mes < 1 || mes > 12)
+        }
+        if (mes < 1 || mes > 12) {
             return false;
-        int[] diasMes = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        }
+        int[] diasMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
         if (mes == 2 && ehBissexto(ano)) {
             diasMes[1] = 29;
         }
 
-        if (dia < 1 || dia > diasMes[mes - 1])
+        if (dia < 1 || dia > diasMes[mes - 1]) {
             return false;
+        }
 
         int idade = Period.between(LocalDate.of(ano, mes, dia), LocalDate.now()).getYears();
-        if (idade - 18 <= 0)
+        if (idade - 18 <= 0) {
             return false;
+        }
 
         return true;
     }
 
     private static boolean ehBissexto(int ano) {
-        return (ano % 400 == 0) ||
-                (ano % 4 == 0 && ano % 100 != 0);
+        return (ano % 400 == 0)
+                || (ano % 4 == 0 && ano % 100 != 0);
+    }
+
+    private static void buscarTutorPorCod() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nDigite o codigo do tutor a ser localizado: ");
+        int codTutor = scanner.nextInt();
+        for (int i = 0; i < tut.size(); i++) {
+            if (codTutor - 1 == i) {
+                System.out.println("\n--- Tutor localizado ---");
+                System.out.println(tut.get(i));
+            }
+        }
+    }
+
+    private static void excluiTutorPorCod() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nDigite o codigo do tutor a ser exlcuido");
+        int codTutorExcl = scanner.nextInt();
+        if (codTutorExcl < 0 || codTutorExcl > tut.size()){
+            System.out.println("Codigo de tutor nao encontrado");
+        }else{
+            tut.remove(codTutorExcl - 1);
+            System.out.println("Tutor (+pets) excluido com sucesso!");
+        }
     }
 
     private static void imprimeTutor() {
         System.out.println("*** Cadastro de Tutor ***");
-        for (Tutor t : tut)
+        for (Tutor t : tut) {
             System.out.println(t.toString());
+        }
     }
 }
