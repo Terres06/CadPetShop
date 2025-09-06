@@ -160,13 +160,18 @@ public class PetShop {
 
     private static void buscarTutorPorCod() {
         Scanner scanner = new Scanner(System.in);
+        int cont = 0;
         System.out.println("\nDigite o codigo do tutor a ser localizado: ");
         int codTutor = scanner.nextInt();
         for (int i = 0; i < tut.size(); i++) {
             if (codTutor - 1 == i) {
                 System.out.println("\n--- Tutor localizado ---");
                 System.out.println(tut.get(i));
+                cont += 1;
             }
+        }
+        if (cont == 0){
+            System.out.println("Nenhum Tutor encontrado.");
         }
     }
 
