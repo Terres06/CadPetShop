@@ -38,7 +38,7 @@ public class PetShop {
                     excluiTutorPorCod();
                     break;
                 case 'x':
-                    System.out.println("Sistema de cadastro encerrado!");
+                    System.out.println("--- Programa de cadastro encerrado ---");
                     break;
                 default:
                     System.out.println("Opcao invalida, digite novamente.");
@@ -85,7 +85,7 @@ public class PetShop {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Digite o nome do tutor(a): (vazio encerra o programa)");
+            System.out.println("Digite o nome do tutor(a): (vazio encerra o cadastro tutor)");
             String nome = scanner.nextLine();
             if (nome.isEmpty()) {
                 break;
@@ -146,7 +146,7 @@ public class PetShop {
         }
 
         int idade = Period.between(LocalDate.of(ano, mes, dia), LocalDate.now()).getYears();
-        if (idade - 18 <= 0) {
+        if (idade - 18 < 0) {
             return false;
         }
 
@@ -164,7 +164,7 @@ public class PetShop {
         System.out.println("\nDigite o codigo do tutor a ser localizado: ");
         int codTutor = scanner.nextInt();
         for (int i = 0; i < tut.size(); i++) {
-            if (codTutor - 1 == i) {
+            if (tut.get(i).getCod() == codTutor) {
                 System.out.println("\n--- Tutor localizado ---");
                 System.out.println(tut.get(i));
                 cont += 1;
@@ -179,18 +179,26 @@ public class PetShop {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nDigite o codigo do tutor a ser exlcuido");
         int codTutorExcl = scanner.nextInt();
-        if (codTutorExcl < 0 || codTutorExcl > tut.size()){
-            System.out.println("Codigo de tutor nao encontrado");
-        }else{
-            tut.remove(codTutorExcl - 1);
-            System.out.println("Tutor (+pets) excluido com sucesso!");
+        Tutor tutorParaRemover = null;
+        for (Tutor t : tut) {
+            if (t.getCod() == codTutorExcl) {
+                tutorParaRemover = t;
+                break;
+            }
+        }
+        if (tutorParaRemover != null) {
+            tut.remove(tutorParaRemover);
+            System.out.println("Tutor (+pets) com codigo " + codTutorExcl + " excluido com sucesso!");
+        } else {
+            System.out.println("Tutor com codigo " + codTutorExcl + " inexistente!");
         }
     }
 
     private static void imprimeTutor() {
-        System.out.println("*** Cadastro de Tutor ***");
+        System.out.println("--- CADASTRO DE TUTORES E PETS ------------------------------------------------------\n");
         for (Tutor t : tut) {
             System.out.println(t.toString());
         }
+        System.out.println("------------------------------------------------------------------------------");
     }
 }
